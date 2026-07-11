@@ -482,7 +482,8 @@
     </div>
     <div class="form-group" id="letter-field" style="display:none">
       <label class="form-label">客製字母或數字<span class="req"> *</span></label>
-      <input type="text" class="form-input" id="f-letter" placeholder="請輸入字母（A–Z）或數字（0–9）" maxlength="3">
+      <input type="text" class="form-input" id="f-letter" placeholder="字母 A–Z、數字 1–9" maxlength="3">
+      <div style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6">字母填寫 A–Z、數字 1–9；特殊字體請私訊官方 LINE 討論</div>
       <div class="error-msg" id="err-letter">請填寫客製字母或數字</div>
     </div>
     <div class="divider"></div>
@@ -525,7 +526,7 @@
     </div>
     <div class="form-group">
       <label class="form-label">備註 / 特殊需求</label>
-      <textarea class="form-textarea" id="f-note" placeholder="例如：蛋糕寫字、過敏原、其他說明..."></textarea>
+      <textarea class="form-textarea" id="f-note" placeholder="例如：想要的字母／文字（聖多諾黑字母款請填，如 A、HAPPY、生日快樂）、蛋糕寫字、過敏原、其他需求…"></textarea>
     </div>
     <div class="divider"></div>
     <button class="submit-btn" onclick="goToPayment()">下一步：選擇付款方式 →</button>
@@ -725,8 +726,6 @@
       "2026-07-11": "門市取貨",
       "2026-07-12": "門市取貨",
       "2026-07-15": "當日門市無營業，僅供蛋糕取貨",
-      "2026-07-16": "當日門市無營業，僅供蛋糕取貨",
-      "2026-07-17": "門市取貨",
       "2026-07-18": "門市取貨",
       "2026-07-22": "當日門市無營業，僅供蛋糕取貨",
       "2026-07-23": "當日門市無營業，僅供蛋糕取貨",
