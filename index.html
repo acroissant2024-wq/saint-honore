@@ -303,7 +303,7 @@
           <div class="product-name">八月父親節限定 · 芋泥香草布丁<em>August Limited · Taro Vanilla Pudding</em></div>
           <p class="product-desc">綿密芋泥層疊香草布丁內餡，父親節檔期限定供應。</p>
           <div class="product-specs">
-            <div class="spec-row"><span class="spec-key">八月檔期</span><span class="spec-val">8/1–8/9（每週二、三、四不開放）</span></div>
+            <div class="spec-row"><span class="spec-key">八月檔期</span><span class="spec-val">8/1–8/31（每週二、三不開放）</span></div>
             <div class="spec-row"><span class="spec-key">提前預訂</span><span class="spec-val">至少 3 天</span></div>
           </div>
           <div class="price-list">
@@ -343,7 +343,8 @@
           <div class="spec-row"><span class="spec-key">口味</span><span class="spec-val">焦糖香草</span></div>
           <div class="spec-row"><span class="spec-key">客製內容</span><span class="spec-val">A–Z 字母 / 0–9 數字</span></div>
           <div class="spec-row"><span class="spec-key">六月檔期</span><span class="spec-val">6/9–6/21（6/13、6/22–6/30 不開放）</span></div>
-          <div class="spec-row"><span class="spec-key">八月檔期</span><span class="spec-val">8/1–8/9（每週二、三、四不開放）</span></div>
+          <div class="spec-row"><span class="spec-key">八月檔期</span><span class="spec-val">8/1–8/31（每週二、三不開放）</span></div>
+          <div class="spec-row"><span class="spec-key">九月檔期</span><span class="spec-val">9/22–9/27（中秋檔期繁忙，9/22 前不開放）</span></div>
           <div class="spec-row"><span class="spec-key">提前預訂</span><span class="spec-val">至少 5 天</span></div>
         </div>
         <div class="price-list">
@@ -754,26 +755,32 @@
       "2026-08-01": "門市取貨",
       "2026-08-02": "門市取貨",
       "2026-08-03": "門市取貨",
-      "2026-08-05": "當日門市無營業，僅供蛋糕取貨",
-      "2026-08-06": "當日門市無營業，僅供蛋糕取貨",
+      "2026-08-06": "門市取貨",
       "2026-08-07": "門市取貨",
       "2026-08-08": "門市取貨",
       "2026-08-09": "門市取貨",
-      "2026-08-12": "當日門市無營業，僅供蛋糕取貨",
-      "2026-08-13": "當日門市無營業，僅供蛋糕取貨",
+      "2026-08-10": "門市取貨",
+      "2026-08-13": "門市取貨",
       "2026-08-14": "門市取貨",
       "2026-08-15": "門市取貨",
       "2026-08-16": "門市取貨",
-      "2026-08-19": "當日門市無營業，僅供蛋糕取貨",
-      "2026-08-20": "當日門市無營業，僅供蛋糕取貨",
+      "2026-08-17": "門市取貨",
+      "2026-08-20": "門市取貨",
       "2026-08-21": "門市取貨",
       "2026-08-22": "門市取貨",
       "2026-08-23": "門市取貨",
-      "2026-08-26": "當日門市無營業，僅供蛋糕取貨",
-      "2026-08-27": "當日門市無營業，僅供蛋糕取貨",
+      "2026-08-24": "門市取貨",
+      "2026-08-27": "門市取貨",
       "2026-08-28": "門市取貨",
       "2026-08-29": "門市取貨",
       "2026-08-30": "門市取貨",
+      "2026-08-31": "門市取貨",
+      "2026-09-22": "門市取貨",
+      "2026-09-23": "門市取貨",
+      "2026-09-24": "門市取貨",
+      "2026-09-25": "門市取貨",
+      "2026-09-26": "門市取貨",
+      "2026-09-27": "門市取貨",
     },
 
     // LINE 官方帳號
@@ -841,6 +848,7 @@
     const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
     const today = new Date().toISOString().split("T")[0];
     const selectedVal = document.getElementById("f-date").value;
+    const taroNoSep = document.getElementById("f-type").value.includes("芋泥"); // 芋泥八月限定，不供應九月
 
     // Empty cells
     for(let i=0; i<firstDay; i++){
@@ -864,10 +872,11 @@
       const isPast = dateStr < calMinDate;
       const isCakeOnly = isOpen && isOpen.includes("僅供");
       const isSelected = dateStr === selectedVal;
+      const isBlocked = taroNoSep && dateStr.slice(0,7) === "2026-09";
 
       if(isSelected){
         el.className = "cal-day open selected" + (isCakeOnly?" cake-only":"");
-      } else if(isPast || !isOpen){
+      } else if(isPast || !isOpen || isBlocked){
         el.className = "cal-day " + (isPast ? "past" : "closed");
         dotEl.style.display="none";
       } else {
@@ -892,6 +901,15 @@
     const isLetter=val.includes("字母");
     document.getElementById("letter-field").style.display=isLetter?"block":"none";
     setMinDate(isLetter?CONFIG.minDays字母:CONFIG.minDays圓形);
+    // 芋泥香草布丁為八月限定，不供應九月：若已選九月日期則清除
+    if(val.includes("芋泥")){
+      const d=document.getElementById("f-date").value;
+      if(d && d.slice(0,7)==="2026-09"){
+        document.getElementById("f-date").value="";
+        document.getElementById("date-hint").textContent="芋泥香草布丁為八月限定，不供應九月，請改選日期或品項";
+      }
+    }
+    renderCal();
   }
 
   // Validation step 1
@@ -910,6 +928,16 @@
       else{el.classList.remove("error");errEl.classList.remove("show");}
     });
     if(!ok) return;
+
+    // 芋泥香草布丁為八月限定，不供應九月
+    if(document.getElementById("f-type").value.includes("芋泥") && document.getElementById("f-date").value.slice(0,7)==="2026-09"){
+      document.getElementById("f-date").value="";
+      document.getElementById("date-hint").textContent="芋泥香草布丁為八月限定，不供應九月，請改選日期或品項";
+      document.getElementById("f-date").classList.add("error");
+      document.getElementById("err-date").classList.add("show");
+      renderCal();
+      return;
+    }
 
     // Build order mini summary
     const type=document.getElementById("f-type").value;
